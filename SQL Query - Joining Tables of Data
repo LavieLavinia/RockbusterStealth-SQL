@@ -1,4 +1,4 @@
-A SQL expression to for joining tables of data to determine top 10 countries, top 10 cities, and top 5 customers.
+SQL expression for joining tables of data to identify top 10 countries, top 10 cities, and top 5 customers.
 
 1. TOP 10 COUNTRIES IN TERMS OF CUSTOMER NUMBERS
 
