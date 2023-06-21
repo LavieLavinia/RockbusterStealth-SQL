@@ -1,0 +1,43 @@
+A SQL expression to for joining tables of data to determine top 10 countries, top 10 cities, and top 5 customers.
+
+1. TOP 10 COUNTRIES IN TERMS OF CUSTOMER NUMBERS
+
+SELECT D.country AS country,
+       COUNT(A.customer_id) AS number_of_customer
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id GROUP BY country
+ORDER BY number_of_customer DESC
+LIMIT 10
+
+2. TOP 10 CITIES WITHIN THE TOP 10 COUNTRIES (IN STEP 1)
+
+SELECT C.city AS city,
+       SUM(E.amount) AS payment
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+INNER JOIN payment E on A.customer_id = E.customer_id
+WHERE D.country IN ('India', 'China', 'United States', 'Japan', 'Mexico', 'Brazil', 'Russian FederaNon', 'Philippines', 'Turkey', 'Indonesia')
+GROUP BY city
+ORDER BY payment DESC
+LIMIT 10
+
+3. TOP 5 CUSTOMERS IN THE TO 10 CITIES WHO HAVE PAID THE HIGHEST TOTAL AMOUNTS
+
+SELECT A.customer_id AS customerID, 
+       A.first_name AS customer_first_name, 
+       A.last_name AS customer_last_name, 
+       D.country AS country,
+       C.city AS city,
+SUM(E.amount) AS total_amount_paid
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+INNER JOIN payment E on A.customer_id = E.customer_id
+WHERE C.city IN ('Cape Coral', 'Santa Brbara dOeste', 'Memphis', 'Tanza', 'Valparai', 'Santa Rosa', 'Aurora', 'Tanauan', 'Halisahar', 'Bijapur')
+GROUP BY customerID, customer_first_name, customer_last_name, country, city ORDER BY total_amount_paid DESC
+LIMIT 5
+ 
